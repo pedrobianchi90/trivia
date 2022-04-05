@@ -1,6 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Proptypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
+import { getToken } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -28,6 +32,7 @@ class Login extends React.Component {
 
   render() {
     const { player, email, disabled } = this.state;
+    const { getToken: getTokenFunc } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -49,13 +54,19 @@ class Login extends React.Component {
               value={ email }
               onChange={ this.handleChange }
             />
-            <button
-              type="button"
-              disabled={ disabled }
-              data-testid="btn-play"
+            <Link
+              to="/gamepage"
             >
-              Play
-            </button>
+              <button
+                type="button"
+                disabled={ disabled }
+                data-testid="btn-play"
+                onClick={ getTokenFunc }
+              >
+                Play
+              </button>
+
+            </Link>
           </form>
         </header>
       </div>
@@ -63,4 +74,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispacth) => ({
+  getToken: () => dispacth(getToken()),
+});
+
+Login.propTypes = {
+  getToken: Proptypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
