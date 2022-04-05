@@ -1,1 +1,4 @@
-/* export const ACTION = (state) => ({ type: 'ACTION', state }); */
+export const action = () => {};
+export const changeEmail = ({ email, player }) => ({
+  type: 'CHANGE_EMAIL', email, player,
+});

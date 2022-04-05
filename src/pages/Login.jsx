@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import logo from '../trivia.png';
 import '../App.css';
+import { changeEmail } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -29,6 +32,7 @@ class Login extends React.Component {
 
   render() {
     const { player, email, disabled } = this.state;
+    const { emailDispatch } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -54,6 +58,9 @@ class Login extends React.Component {
               type="button"
               disabled={ disabled }
               data-testid="btn-play"
+              onClick={ () => {
+                emailDispatch({ player, email });
+              } }
             >
               Play
             </button>
@@ -67,4 +74,12 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+  emailDispatch: (state) => dispatch(changeEmail(state)),
+});
+
+Login.propTypes = {
+  emailDispatch: PropTypes.func.isRequired,
+};
+
+export default connect(null, mapDispatchToProps)(Login);
