@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import logo from '../trivia.png';
 import '../App.css';
 import { changeEmail, getToken } from '../redux/actions';
@@ -14,7 +14,14 @@ class Login extends React.Component {
       player: '',
       email: '',
       disabled: true,
+      ready: false,
     };
+  }
+
+  requestToken = async () => {
+    const { dispatchToken } = this.props;
+    await dispatchToken();
+    this.setState({ ready: true });
   }
 
   handleChange = ({ target: { name, value } }) => {
@@ -31,8 +38,8 @@ class Login extends React.Component {
   }
 
   render() {
-    const { player, email, disabled } = this.state;
-    const { emailDispatch, getToken: getTokenFunc } = this.props;
+    const { player, email, disabled, ready } = this.state;
+    const { emailDispatch } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -54,23 +61,22 @@ class Login extends React.Component {
               value={ email }
               onChange={ this.handleChange }
             />
-            <Link to="/gamepage">
-              <button
-                type="button"
-                disabled={ disabled }
-                data-testid="btn-play"
-                onClick={ () => {
-                  emailDispatch({ player, email });
-                  getTokenFunc();
-                } }
-              >
-                Play
-              </button>
-            </Link>
+            <button
+              type="button"
+              disabled={ disabled }
+              data-testid="btn-play"
+              onClick={ () => {
+                emailDispatch({ player, email });
+                this.requestToken();
+              } }
+            >
+              Play
+            </button>
           </form>
           <Link to="/settings">
             <button type="button" data-testid="btn-settings">Configurações</button>
           </Link>
+          { ready && <Redirect to="/gamepage" /> }
         </header>
       </div>
     );
@@ -79,12 +85,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (state) => dispatch(changeEmail(state)),
-  getToken: () => dispatch(getToken()),
+  dispatchToken: () => dispatch(getToken()),
 });
 
 Login.propTypes = {
   emailDispatch: PropTypes.func.isRequired,
-  getToken: PropTypes.func.isRequired,
+  dispatchToken: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

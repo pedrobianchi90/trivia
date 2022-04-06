@@ -8,8 +8,6 @@ export const RESULTS = 'RESULTS';
 
 const getTokenAction = (value) => ({ type: GET_TOKEN, value });
 
-// const resultsAction = (value) => ({ type: RESULTS, value });
-
 export const getToken = () => async (dispatch) => {
   const url = 'https://opentdb.com/api_token.php?command=request';
 
@@ -17,12 +15,5 @@ export const getToken = () => async (dispatch) => {
   const data = await response.json();
 
   dispatch(getTokenAction(data.token));
+  console.log('a');
 };
-
-// export const getAPI = (tokenValue) => async (dispatch) => {
-//   const url = `https://opentdb.com/api.php?amount=5&token=${tokenValue}`;
-//   const response = await fetch(url);
-//   const data = await response.json();
-//   const { results } = data;
-//   dispatch(resultsAction(results));
-// };
