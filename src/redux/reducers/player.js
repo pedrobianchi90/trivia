@@ -7,6 +7,12 @@ const INITIAL_STATE = {
 
 function player(state = INITIAL_STATE, action) {
   switch (action.type) {
+  case 'CHANGE_EMAIL':
+    return ({
+      ...state,
+      name: action.player,
+      gravatarEmail: action.email,
+    });
   default:
     return state;
   }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import logo from '../trivia.png';
 import '../App.css';
-import { getToken } from '../redux/actions';
+import { changeEmail, getToken } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -32,7 +32,7 @@ class Login extends React.Component {
 
   render() {
     const { player, email, disabled } = this.state;
-    const { getToken: getTokenFunc } = this.props;
+    const { emailDispatch, getToken: getTokenFunc } = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -54,18 +54,18 @@ class Login extends React.Component {
               value={ email }
               onChange={ this.handleChange }
             />
-            <Link
-              to="/gamepage"
-            >
+            <Link to="/gamepage">
               <button
                 type="button"
                 disabled={ disabled }
                 data-testid="btn-play"
-                onClick={ getTokenFunc }
+                onClick={ () => {
+                  emailDispatch({ player, email });
+                  getTokenFunc();
+                } }
               >
                 Play
               </button>
-
             </Link>
           </form>
           <Link to="/settings">
@@ -77,11 +77,13 @@ class Login extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispacth) => ({
+const mapDispatchToProps = (dispatch) => ({
+  emailDispatch: (state) => dispatch(changeEmail(state)),
   getToken: () => dispacth(getToken()),
 });
 
 Login.propTypes = {
+  emailDispatch: PropTypes.func.isRequired,
   getToken: Proptypes.func.isRequired,
 };
 

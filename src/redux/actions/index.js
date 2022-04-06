@@ -1,4 +1,7 @@
-/* export const ACTION = (state) => ({ type: 'ACTION', state }); */
+export const changeEmail = ({ email, player }) => ({
+  type: 'CHANGE_EMAIL', email, player,
+});
+
 export const GET_TOKEN = 'GET_TOKEN';
 
 const getTokenAction = (value) => ({ type: GET_TOKEN, value });
