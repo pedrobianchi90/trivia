@@ -219,7 +219,6 @@ class GamePage extends React.Component {
             </div>
           ) : undefined }
         </div>
-
         { this.renderNext() }
       </>
     );
