@@ -160,7 +160,6 @@ class GamePage extends React.Component {
   }
 
   render() {
-
     const { results, index, respostas, timer } = this.state;
     const question = results[index];
     return (
@@ -171,9 +170,7 @@ class GamePage extends React.Component {
           { results && respostas ? (
             <div>
               <h3 data-testid="question-category">{ question.category }</h3>
-
               <p data-testid="question-text">{ question.question }</p>
-
               <div data-testid="answer-options">
                 { results[index].type === 'boolean' ? (
                   this.renderBoolean()
@@ -184,7 +181,6 @@ class GamePage extends React.Component {
             </div>
           ) : undefined }
         </div>
-
         { showClass ? (
           <button
             type="button"
