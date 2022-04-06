@@ -68,6 +68,9 @@ class Login extends React.Component {
 
             </Link>
           </form>
+          <Link to="/settings">
+            <button type="button" data-testid="btn-settings">Configurações</button>
+          </Link>
         </header>
       </div>
     );
