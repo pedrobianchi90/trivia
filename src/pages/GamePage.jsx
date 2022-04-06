@@ -11,6 +11,7 @@ class GamePage extends React.Component {
       results: '',
       index: 0,
       respostas: [],
+      showClass: false,
     };
   }
 
@@ -60,6 +61,66 @@ class GamePage extends React.Component {
     // função vista no site DelfStack https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/#:~:text=Baralhar%20um%20array%20dependendo%20do%20motor%20JavaScript,-Comecemos%20por%20implementar&text=sort()%20mas%20utilizando%20alguma,pode%20ser%20positivo%20ou%20negativo.
   }
 
+  handleAnswer = () => {
+    this.setState({ showClass: true });
+  }
+
+  renderBoolean = () => {
+    const { respostas, results, index, showClass } = this.state;
+    return (
+      respostas.map((answer) => (
+        answer === results[index].correct_answer ? (
+          <button
+            type="button"
+            data-testid="correct-answer"
+            onClick={ this.handleAnswer }
+            className={ showClass && 'correct-answer' }
+          >
+            { answer }
+          </button>
+        ) : (
+          <button
+            type="button"
+            data-testid="wrong-answer"
+            onClick={ this.handleAnswer }
+            className={ showClass && 'wrong-answer' }
+          >
+            { answer }
+          </button>
+        )
+      ))
+    );
+  }
+
+  renderMultiples = () => {
+    const { respostas, results, index, showClass } = this.state;
+    return (
+      respostas.map((answer, indexMap) => (
+        answer === results[index].correct_answer ? (
+          <button
+            key={ results[index].correct_answer }
+            type="button"
+            data-testid="correct-answer"
+            onClick={ this.handleAnswer }
+            className={ showClass && 'correct-answer' }
+          >
+            { results[index].correct_answer }
+          </button>
+        ) : (
+          <button
+            key={ answer }
+            type="button"
+            data-testid={ `wrong-answer-${indexMap}` }
+            onClick={ this.handleAnswer }
+            className={ showClass && 'wrong-answer' }
+          >
+            { answer }
+          </button>
+        )
+      ))
+    );
+  }
+
   render() {
     const { results, index, respostas } = this.state;
     const question = results[index];
@@ -75,47 +136,9 @@ class GamePage extends React.Component {
 
               <div data-testid="answer-options">
                 { results[index].type === 'boolean' ? (
-                  respostas.map((answer) => (
-                    answer === results[index].correct_answer ? (
-                      <button
-                        type="button"
-                        data-testid="correct-answer"
-                        onClick={ this.changeIndex }
-                      >
-                        { answer }
-                      </button>
-                    ) : (
-                      <button
-                        type="button"
-                        data-testid="wrong-answer"
-                        onClick={ this.changeIndex }
-                      >
-                        { answer }
-                      </button>
-                    )
-                  ))
+                  this.renderBoolean()
                 ) : (
-                  respostas.map((answer, indexMap) => (
-                    answer === results[index].correct_answer ? (
-                      <button
-                        key={ results[index].correct_answer }
-                        type="button"
-                        data-testid="correct-answer"
-                        onClick={ this.changeIndex }
-                      >
-                        { results[index].correct_answer }
-                      </button>
-                    ) : (
-                      <button
-                        key={ answer }
-                        type="button"
-                        data-testid={ `wrong-answer-${indexMap}` }
-                        onClick={ this.changeIndex }
-                      >
-                        { answer }
-                      </button>
-                    )
-                  ))
+                  this.renderMultiples()
                 )}
               </div>
             </div>
