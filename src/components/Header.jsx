@@ -5,14 +5,14 @@ import md5 from 'crypto-js/md5';
 
 class Header extends React.Component {
   getImgSrc = () => {
-    const { rootState: { gravatarEmail } } = this.props;
+    const { rootState: { player: { gravatarEmail } } } = this.props;
     const hash = md5(gravatarEmail).toString();
     const img = `https://www.gravatar.com/avatar/${hash}`;
     return img;
   }
 
   render() {
-    const { rootState: { name } } = this.props;
+    const { rootState: { player: { name } } } = this.props;
     return (
       <header>
         <img
