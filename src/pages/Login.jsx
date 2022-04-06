@@ -79,12 +79,12 @@ class Login extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (state) => dispatch(changeEmail(state)),
-  getToken: () => dispacth(getToken()),
+  getToken: () => dispatch(getToken()),
 });
 
 Login.propTypes = {
   emailDispatch: PropTypes.func.isRequired,
-  getToken: Proptypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

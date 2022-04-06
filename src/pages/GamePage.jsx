@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import Header from '../components/Header';
 // npm run cy:open
 
 class GamePage extends React.Component {
@@ -116,43 +117,46 @@ class GamePage extends React.Component {
     const question = results[index];
     // console.log(perguntas);
     return (
-      <div>
-        { results && perguntas ? (
-          <div>
-            <h3 data-testid="question-category">{ question.category }</h3>
+      <>
+        <Header />
+        <div>
+          { results && perguntas ? (
+            <div>
+              <h3 data-testid="question-category">{ question.category }</h3>
 
-            <p data-testid="question-text">{ question.question }</p>
+              <p data-testid="question-text">{ question.question }</p>
 
-            <div data-testid="answer-options">
-              { results[index].type === 'boolean' ? (
-                this.boolBtn()
-              ) : (
-                perguntas.map((answer, indexMap) => (
-                  answer === results[index].correct_answer ? (
-                    <button
-                      key={ results[index].correct_answer }
-                      type="button"
-                      data-testid="correct-answer"
-                      onClick={ this.changeIndex }
-                    >
-                      { results[index].correct_answer }
-                    </button>
-                  ) : (
-                    <button
-                      key={ answer }
-                      type="button"
-                      data-testid={ `wrong-answer-${indexMap}` }
-                      onClick={ this.changeIndex }
-                    >
-                      { answer }
-                    </button>
-                  )
-                ))
-              )}
+              <div data-testid="answer-options">
+                { results[index].type === 'boolean' ? (
+                  this.boolBtn()
+                ) : (
+                  perguntas.map((answer, indexMap) => (
+                    answer === results[index].correct_answer ? (
+                      <button
+                        key={ results[index].correct_answer }
+                        type="button"
+                        data-testid="correct-answer"
+                        onClick={ this.changeIndex }
+                      >
+                        { results[index].correct_answer }
+                      </button>
+                    ) : (
+                      <button
+                        key={ answer }
+                        type="button"
+                        data-testid={ `wrong-answer-${indexMap}` }
+                        onClick={ this.changeIndex }
+                      >
+                        { answer }
+                      </button>
+                    )
+                  ))
+                )}
+              </div>
             </div>
-          </div>
-        ) : undefined }
-      </div>
+          ) : undefined }
+        </div>
+      </>
     );
   }
 }
