@@ -10,6 +10,7 @@ class GamePage extends React.Component {
     this.state = {
       results: '',
       index: 0,
+      respostas: [],
     };
   }
 
@@ -19,25 +20,23 @@ class GamePage extends React.Component {
 
   getResults = async () => {
     const { tokenValue } = this.props;
-    console.log(tokenValue);
     const url = `https://opentdb.com/api.php?amount=5&token=${tokenValue}`;
     const response = await fetch(url);
     const data = await response.json();
     const { results } = data;
-    console.log(results);
 
     this.setState({
       results,
     }, () => {
       const { results: result, index } = this.state;
-      const perguntas = [
+      const respostas = [
         result[index].correct_answer,
         ...result[index].incorrect_answers,
       ];
       const random = 0.5;
-      perguntas.sort(() => Math.random() - random);
+      respostas.sort(() => Math.random() - random);
       this.setState({
-        perguntas,
+        respostas,
       });
     });
   }
@@ -48,27 +47,27 @@ class GamePage extends React.Component {
       index: prevState.index + 1,
     }), () => {
       const { index } = this.state;
-      const perguntas = [
+      const respostas = [
         result[index].correct_answer,
         ...result[index].incorrect_answers,
       ];
       const random = 0.5;
-      perguntas.sort(() => Math.random() - random);
+      respostas.sort(() => Math.random() - random);
       this.setState({
-        perguntas,
+        respostas,
       });
     });
     // função vista no site DelfStack https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/#:~:text=Baralhar%20um%20array%20dependendo%20do%20motor%20JavaScript,-Comecemos%20por%20implementar&text=sort()%20mas%20utilizando%20alguma,pode%20ser%20positivo%20ou%20negativo.
   }
 
   render() {
-    const { results, index, perguntas } = this.state;
+    const { results, index, respostas } = this.state;
     const question = results[index];
     return (
       <>
         <Header />
         <div>
-          { results && perguntas ? (
+          { results && respostas ? (
             <div>
               <h3 data-testid="question-category">{ question.category }</h3>
 
@@ -76,7 +75,7 @@ class GamePage extends React.Component {
 
               <div data-testid="answer-options">
                 { results[index].type === 'boolean' ? (
-                  perguntas.map((answer) => (
+                  respostas.map((answer) => (
                     answer === results[index].correct_answer ? (
                       <button
                         type="button"
@@ -96,7 +95,7 @@ class GamePage extends React.Component {
                     )
                   ))
                 ) : (
-                  perguntas.map((answer, indexMap) => (
+                  respostas.map((answer, indexMap) => (
                     answer === results[index].correct_answer ? (
                       <button
                         key={ results[index].correct_answer }
