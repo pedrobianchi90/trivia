@@ -15,11 +15,14 @@ class GamePage extends React.Component {
       respostas: [],
       showClass: false,
       feedback: false,
+      disabled: false,
+      timer: 30,
     };
   }
 
   componentDidMount() {
     this.getResults();
+    this.timeToAnswer();
   }
 
   getResults = async () => {
@@ -78,7 +81,7 @@ class GamePage extends React.Component {
   }
 
   renderBoolean = () => {
-    const { respostas, results, index, showClass } = this.state;
+    const { respostas, results, index, showClass, disabled } = this.state;
     return (
       respostas.map((answer) => (
         answer === results[index].correct_answer ? (
@@ -87,6 +90,7 @@ class GamePage extends React.Component {
             data-testid="correct-answer"
             onClick={ this.handleAnswer }
             className={ showClass && 'correct-answer' }
+            disabled={ disabled }
           >
             { answer }
           </button>
@@ -96,6 +100,7 @@ class GamePage extends React.Component {
             data-testid="wrong-answer"
             onClick={ this.handleAnswer }
             className={ showClass && 'wrong-answer' }
+            disabled={ disabled }
           >
             { answer }
           </button>
@@ -105,7 +110,7 @@ class GamePage extends React.Component {
   }
 
   renderMultiples = () => {
-    const { respostas, results, index, showClass } = this.state;
+    const { respostas, results, index, showClass, disabled } = this.state;
     return (
       respostas.map((answer, indexMap) => (
         answer === results[index].correct_answer ? (
@@ -115,6 +120,7 @@ class GamePage extends React.Component {
             data-testid="correct-answer"
             onClick={ this.handleAnswer }
             className={ showClass && 'correct-answer' }
+            disabled={ disabled }
           >
             { results[index].correct_answer }
           </button>
@@ -125,6 +131,7 @@ class GamePage extends React.Component {
             data-testid={ `wrong-answer-${indexMap}` }
             onClick={ this.handleAnswer }
             className={ showClass && 'wrong-answer' }
+            disabled={ disabled }
           >
             { answer }
           </button>
@@ -160,12 +167,43 @@ class GamePage extends React.Component {
     }
   }
 
+  timeToAnswer = () => {
+    const miliSeconds = 30000;
+    this.handleTimer();
+    setTimeout(this.handleTimeOut, miliSeconds);
+  };
+
+  handleTimeOut = () => {
+    this.setState({
+      disabled: true,
+      showClass: true,
+    });
+  }
+
+  handleTimer = () => {
+    const miliSeconds = 1000;
+    const timeOut = setInterval(this.decrementTime, miliSeconds);
+    return timeOut;
+  }
+
+  decrementTime = () => {
+    const { timer } = this.state;
+    if (timer > 0) {
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }));
+    } else {
+      clearInterval(0);
+    }
+  }
+
   render() {
-    const { results, index, respostas } = this.state;
+    const { results, index, respostas, timer } = this.state;
     const question = results[index];
     return (
       <>
         <Header />
+        <p>{ timer }</p>
         <div>
           { results && respostas ? (
             <div>
