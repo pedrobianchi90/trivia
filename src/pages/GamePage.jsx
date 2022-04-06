@@ -208,9 +208,7 @@ class GamePage extends React.Component {
           { results && respostas ? (
             <div>
               <h3 data-testid="question-category">{ question.category }</h3>
-
               <p data-testid="question-text">{ question.question }</p>
-
               <div data-testid="answer-options">
                 { results[index].type === 'boolean' ? (
                   this.renderBoolean()
