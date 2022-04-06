@@ -56,6 +56,7 @@ class GamePage extends React.Component {
       respostas.sort(() => Math.random() - random);
       this.setState({
         respostas,
+        showClass: false,
       });
     });
     // função vista no site DelfStack https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/#:~:text=Baralhar%20um%20array%20dependendo%20do%20motor%20JavaScript,-Comecemos%20por%20implementar&text=sort()%20mas%20utilizando%20alguma,pode%20ser%20positivo%20ou%20negativo.
@@ -122,7 +123,7 @@ class GamePage extends React.Component {
   }
 
   render() {
-    const { results, index, respostas } = this.state;
+    const { results, index, respostas, showClass } = this.state;
     const question = results[index];
     return (
       <>
@@ -144,6 +145,16 @@ class GamePage extends React.Component {
             </div>
           ) : undefined }
         </div>
+
+        { showClass ? (
+          <button
+            type="button"
+            data-testid="btn-next"
+            onClick={ this.changeIndex }
+          >
+            Next
+          </button>
+        ) : undefined }
       </>
     );
   }
