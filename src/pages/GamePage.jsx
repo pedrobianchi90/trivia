@@ -17,6 +17,8 @@ class GamePage extends React.Component {
       feedback: false,
       disabled: false,
       timer: 30,
+      correctAnswers: [],
+      timerOn: true,
     };
   }
 
@@ -66,7 +68,12 @@ class GamePage extends React.Component {
         this.setState({
           respostas,
           showClass: false,
+          disabled: false,
+          timer: 30,
+          timerOn: true,
         });
+        // clearTimeout(four);
+        // this.timeToAnswer();
       });
     } else {
       this.setState({
@@ -77,7 +84,13 @@ class GamePage extends React.Component {
   }
 
   handleAnswer = () => {
-    this.setState({ showClass: true });
+    this.setState({ showClass: true, disabled: true, timerOn: false });
+  }
+
+  handlePoints = (question) => {
+    this.setState((prevState) => ({
+      correctAnswers: [...prevState.correctAnswers, question],
+    }));
   }
 
   renderBoolean = () => {
@@ -88,7 +101,10 @@ class GamePage extends React.Component {
           <button
             type="button"
             data-testid="correct-answer"
-            onClick={ this.handleAnswer }
+            onClick={ () => {
+              this.handleAnswer();
+              this.handlePoints(results[index]);
+            } }
             className={ showClass && 'correct-answer' }
             disabled={ disabled }
           >
@@ -118,7 +134,10 @@ class GamePage extends React.Component {
             key={ results[index].correct_answer }
             type="button"
             data-testid="correct-answer"
-            onClick={ this.handleAnswer }
+            onClick={ () => {
+              this.handleAnswer();
+              this.handlePoints(results[index]);
+            } }
             className={ showClass && 'correct-answer' }
             disabled={ disabled }
           >
@@ -145,10 +164,7 @@ class GamePage extends React.Component {
     if (showClass && feedback) {
       return (
         <Link to="/feedback">
-          <button
-            type="button"
-            data-testid="feedback-text"
-          >
+          <button type="button" data-testid="feedback-text">
             feedback
           </button>
         </Link>
@@ -156,11 +172,7 @@ class GamePage extends React.Component {
     }
     if (showClass) {
       return (
-        <button
-          type="button"
-          data-testid="btn-next"
-          onClick={ this.changeIndex }
-        >
+        <button type="button" data-testid="btn-next" onClick={ this.changeIndex }>
           Next
         </button>
       );
@@ -187,8 +199,8 @@ class GamePage extends React.Component {
   }
 
   decrementTime = () => {
-    const { timer } = this.state;
-    if (timer > 0) {
+    const { timer, timerOn } = this.state;
+    if (timer > 0 && timerOn) {
       this.setState((prevState) => ({
         timer: prevState.timer - 1,
       }));
@@ -198,11 +210,11 @@ class GamePage extends React.Component {
   }
 
   render() {
-    const { results, index, respostas, timer } = this.state;
+    const { results, index, respostas, timer, correctAnswers } = this.state;
     const question = results[index];
     return (
       <>
-        <Header />
+        <Header perguntas={ correctAnswers } />
         <p>{ timer }</p>
         <div>
           { results && respostas ? (
