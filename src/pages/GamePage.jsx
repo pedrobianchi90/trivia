@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 
 class GamePage extends React.Component {
@@ -10,8 +11,10 @@ class GamePage extends React.Component {
     this.state = {
       results: '',
       index: 0,
+      newIndex: 0,
       respostas: [],
       showClass: false,
+      feedback: false,
     };
   }
 
@@ -43,22 +46,30 @@ class GamePage extends React.Component {
   }
 
   changeIndex = () => {
-    const { results: result } = this.state;
-    this.setState((prevState) => ({
-      index: prevState.index + 1,
-    }), () => {
-      const { index } = this.state;
-      const respostas = [
-        result[index].correct_answer,
-        ...result[index].incorrect_answers,
-      ];
-      const random = 0.5;
-      respostas.sort(() => Math.random() - random);
-      this.setState({
-        respostas,
-        showClass: false,
+    const { results: result, newIndex } = this.state;
+    const four = 4;
+    if (newIndex < four) {
+      this.setState((prevState) => ({
+        index: prevState.index + 1,
+        newIndex: prevState.newIndex + 1,
+      }), () => {
+        const { index } = this.state;
+        const respostas = [
+          result[index].correct_answer,
+          ...result[index].incorrect_answers,
+        ];
+        const random = 0.5;
+        respostas.sort(() => Math.random() - random);
+        this.setState({
+          respostas,
+          showClass: false,
+        });
       });
-    });
+    } else {
+      this.setState({
+        feedback: true,
+      });
+    }
     // função vista no site DelfStack https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/#:~:text=Baralhar%20um%20array%20dependendo%20do%20motor%20JavaScript,-Comecemos%20por%20implementar&text=sort()%20mas%20utilizando%20alguma,pode%20ser%20positivo%20ou%20negativo.
   }
 
@@ -122,8 +133,35 @@ class GamePage extends React.Component {
     );
   }
 
+  renderNext = () => {
+    const { showClass, feedback } = this.state;
+    if (showClass && feedback) {
+      return (
+        <Link to="/feedback">
+          <button
+            type="button"
+            data-testid="feedback-text"
+          >
+            feedback
+          </button>
+        </Link>
+      );
+    }
+    if (showClass) {
+      return (
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.changeIndex }
+        >
+          Next
+        </button>
+      );
+    }
+  }
+
   render() {
-    const { results, index, respostas, showClass } = this.state;
+    const { results, index, respostas } = this.state;
     const question = results[index];
     return (
       <>
@@ -146,15 +184,7 @@ class GamePage extends React.Component {
           ) : undefined }
         </div>
 
-        { showClass ? (
-          <button
-            type="button"
-            data-testid="btn-next"
-            onClick={ this.changeIndex }
-          >
-            Next
-          </button>
-        ) : undefined }
+        { this.renderNext() }
       </>
     );
   }
