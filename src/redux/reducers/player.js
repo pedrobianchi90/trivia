@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   assertions: '',
   score: 0,
   gravatarEmail: '',
+  correctAnswers: 0,
 };
 
 function player(state = INITIAL_STATE, action) {
@@ -16,7 +17,8 @@ function player(state = INITIAL_STATE, action) {
   case 'CHANGE_SCORE':
     return ({
       ...state,
-      score: action.points,
+      score: action.state.points,
+      correctAnswers: action.state.correctAnswers.length,
     });
   default:
     return state;

@@ -10,7 +10,7 @@ export const changeEmail = ({ email, player }) => ({
 
 const getTokenAction = (value) => ({ type: GET_TOKEN, value });
 
-export const changeScore = (points) => ({ type: CHANGE_SCORE, points });
+export const changeScore = (state) => ({ type: CHANGE_SCORE, state });
 
 export const getToken = () => async (dispatch) => {
   const url = 'https://opentdb.com/api_token.php?command=request';
