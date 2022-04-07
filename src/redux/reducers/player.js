@@ -13,6 +13,11 @@ function player(state = INITIAL_STATE, action) {
       name: action.player,
       gravatarEmail: action.email,
     });
+  case 'CHANGE_SCORE':
+    return ({
+      ...state,
+      score: action.points,
+    });
   default:
     return state;
   }
