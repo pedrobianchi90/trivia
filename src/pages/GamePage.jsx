@@ -178,9 +178,14 @@ class GamePage extends React.Component {
     const { showClass, feedback } = this.state;
     if (showClass && feedback) {
       return (
-        <Link to="/feedback">
-          <button type="button" data-testid="feedback-text">feedback</button>
-        </Link>
+        <>
+          <Link to="/feedback">
+            <button type="button" data-testid="feedback-text">feedback</button>
+          </Link>
+          <Link to="/">
+            <button type="button" data-testid="btn-play-again">Play Again</button>
+          </Link>
+        </>
       );
     }
     if (showClass) {
@@ -192,9 +197,7 @@ class GamePage extends React.Component {
     }
   }
 
-  handleTimeOut = () => {
-    this.setState({ disabled: true, showClass: true });
-  }
+  handleTimeOut = () => this.setState({ disabled: true, showClass: true });
 
   decrementTime = () => {
     const { timer, timerOn } = this.state;
@@ -230,9 +233,6 @@ class GamePage extends React.Component {
           ) : undefined }
         </div>
         { this.renderNext() }
-        <Link to="/">
-          <button type="button" data-testid="btn-play-again">Play Again</button>
-        </Link>
       </>
     );
   }
