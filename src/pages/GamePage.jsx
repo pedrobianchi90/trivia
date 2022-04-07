@@ -84,9 +84,7 @@ class GamePage extends React.Component {
         timeToAnswer(this.handleTimeOut, this.decrementTime);
       });
     } else {
-      this.setState({
-        feedback: true,
-      });
+      this.setState({ feedback: true });
     }
     // função vista no site DelfStack https://www.delftstack.com/pt/howto/javascript/shuffle-array-javascript/#:~:text=Baralhar%20um%20array%20dependendo%20do%20motor%20JavaScript,-Comecemos%20por%20implementar&text=sort()%20mas%20utilizando%20alguma,pode%20ser%20positivo%20ou%20negativo.
   }
@@ -232,6 +230,9 @@ class GamePage extends React.Component {
           ) : undefined }
         </div>
         { this.renderNext() }
+        <Link to="/">
+          <button type="button" data-testid="btn-play-again">Play Again</button>
+        </Link>
       </>
     );
   }
