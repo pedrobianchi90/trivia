@@ -12,7 +12,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { rootState: { player: { name } } } = this.props;
+    const { rootState: { player: { name } }, points } = this.props;
     return (
       <header>
         <img
@@ -21,7 +21,7 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">0</p>
+        <p data-testid="header-score">{ points }</p>
       </header>
     );
   }
