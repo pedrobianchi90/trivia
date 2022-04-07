@@ -33,6 +33,7 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   rootState: PropTypes.objectOf(PropTypes.any).isRequired,
+  points: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
