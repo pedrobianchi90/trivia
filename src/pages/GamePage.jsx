@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import timeToAnswer from '../helpers/timers';
 import addPoints from '../helpers/addPoints';
@@ -103,7 +103,7 @@ class GamePage extends React.Component {
         + addPoints(correctAnswers, answerTime) }), () => {
         const { points } = this.state;
         const { changePoints } = this.props;
-        changePoints(points);
+        changePoints({ points, correctAnswers });
       });
     });
   }
@@ -175,19 +175,7 @@ class GamePage extends React.Component {
   }
 
   renderNext = () => {
-    const { showClass, feedback } = this.state;
-    if (showClass && feedback) {
-      return (
-        <>
-          <Link to="/feedback">
-            <button type="button" data-testid="feedback-text">feedback</button>
-          </Link>
-          <Link to="/">
-            <button type="button" data-testid="btn-play-again">Play Again</button>
-          </Link>
-        </>
-      );
-    }
+    const { showClass } = this.state;
     if (showClass) {
       return (
         <button type="button" data-testid="btn-next" onClick={ this.changeIndex }>
@@ -211,11 +199,11 @@ class GamePage extends React.Component {
   }
 
   render() {
-    const { results, index, respostas, timer, points } = this.state;
+    const { results, index, respostas, timer, feedback } = this.state;
     const question = results[index];
     return (
       <>
-        <Header points={ points } />
+        <Header />
         <p>{ timer }</p>
         <div>
           { results && respostas ? (
@@ -231,6 +219,7 @@ class GamePage extends React.Component {
               </div>
             </div>
           ) : undefined }
+          { feedback && <Redirect to="/feedback" /> }
         </div>
         { this.renderNext() }
       </>

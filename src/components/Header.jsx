@@ -12,7 +12,7 @@ class Header extends React.Component {
   }
 
   render() {
-    const { rootState: { player: { name } }, points } = this.props;
+    const { rootState: { player: { name, score } } } = this.props;
     return (
       <header>
         <img
@@ -21,7 +21,7 @@ class Header extends React.Component {
           data-testid="header-profile-picture"
         />
         <p data-testid="header-player-name">{ name }</p>
-        <p data-testid="header-score">{ points }</p>
+        <p data-testid="header-score">{ score }</p>
       </header>
     );
   }
@@ -33,7 +33,6 @@ const mapStateToProps = (state) => ({
 
 Header.propTypes = {
   rootState: PropTypes.objectOf(PropTypes.any).isRequired,
-  points: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
