@@ -10,9 +10,9 @@ class Feedback extends React.Component {
   }
 
   setLocal = () => {
-    const { rootState: { player: { correctAnswers, score } } } = this.props;
+    const { rootState: { player: { assertions, score } } } = this.props;
     const player = {
-      correctAnswers,
+      assertions,
       score,
     };
     const local = JSON.parse(localStorage.getItem('player'));
@@ -28,21 +28,21 @@ class Feedback extends React.Component {
   }
 
   handleResults = () => {
-    const { rootState: { player: { correctAnswers } } } = this.props;
+    const { rootState: { player: { assertions } } } = this.props;
     const average = 3;
-    if (correctAnswers < average) return 'Could be better...';
+    if (assertions < average) return 'Could be better...';
     return 'Well Done!';
   }
 
   render() {
-    const { rootState: { player: { correctAnswers, score } } } = this.props;
+    const { rootState: { player: { assertions, score } } } = this.props;
     return (
       <>
         <Header />
         <h1>Feedback</h1>
         <h2 data-testid="feedback-text">{ this.handleResults() }</h2>
         <p data-testid="feedback-total-question">
-          { correctAnswers }
+          { assertions }
         </p>
         { score > 0 ? (
           <p data-testid="feedback-total-score">
