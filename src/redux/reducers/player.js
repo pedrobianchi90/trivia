@@ -1,9 +1,8 @@
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
-  correctAnswers: 0,
 };
 
 function player(state = INITIAL_STATE, action) {
@@ -18,7 +17,7 @@ function player(state = INITIAL_STATE, action) {
     return ({
       ...state,
       score: action.state.points,
-      correctAnswers: action.state.correctAnswers.length,
+      assertions: action.state.correctAnswers.length,
     });
   default:
     return state;
