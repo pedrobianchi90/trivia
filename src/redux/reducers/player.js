@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   assertions: 0,
   score: 0,
   gravatarEmail: '',
+  picture: '',
 };
 
 function player(state = INITIAL_STATE, action) {
@@ -19,6 +20,12 @@ function player(state = INITIAL_STATE, action) {
       score: action.state.points,
       assertions: action.state.correctAnswers.length,
     });
+  case 'CHANGE_PICTURE':
+    return ({
+      ...state,
+      picture: action.picture,
+    });
+
   default:
     return state;
   }
