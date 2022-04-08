@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../trivia.png';
 import '../App.css';
-import { changeEmail, getToken } from '../redux/actions';
+import { changeEmail, getToken, changeScore } from '../redux/actions';
 
 class Login extends React.Component {
   constructor() {
@@ -16,6 +16,11 @@ class Login extends React.Component {
       disabled: true,
       ready: false,
     };
+  }
+
+  componentDidMount() {
+    const { changePoints } = this.props;
+    changePoints({ points: 0, correctAnswers: [] });
   }
 
   requestToken = async () => {
@@ -86,11 +91,13 @@ class Login extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   emailDispatch: (state) => dispatch(changeEmail(state)),
   dispatchToken: () => dispatch(getToken()),
+  changePoints: (state) => dispatch(changeScore(state)),
 });
 
 Login.propTypes = {
   emailDispatch: PropTypes.func.isRequired,
   dispatchToken: PropTypes.func.isRequired,
+  changePoints: PropTypes.func.isRequired,
 };
 
 export default connect(null, mapDispatchToProps)(Login);

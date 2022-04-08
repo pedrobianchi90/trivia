@@ -10,20 +10,22 @@ class Feedback extends React.Component {
   }
 
   setLocal = () => {
-    const { rootState: { player: { assertions, score } } } = this.props;
+    const { rootState: { player: { assertions, score, picture, name } } } = this.props;
     const player = {
       assertions,
       score,
+      picture,
+      name,
     };
-    const local = JSON.parse(localStorage.getItem('player'));
+    const local = JSON.parse(localStorage.getItem('ranking'));
     if (local) {
       const lista = [...local, player];
       const localString = JSON.stringify(lista);
-      localStorage.setItem('player', localString);
+      localStorage.setItem('ranking', localString);
     } else {
       const lista = [player];
       const localString = JSON.stringify(lista);
-      localStorage.setItem('player', localString);
+      localStorage.setItem('ranking', localString);
     }
   }
 
@@ -52,6 +54,7 @@ class Feedback extends React.Component {
           <p data-testid="feedback-total-score">
             0
           </p>) }
+
         <Link to="/">
           <button type="button" data-testid="btn-play-again">Play Again</button>
         </Link>
