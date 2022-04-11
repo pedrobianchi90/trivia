@@ -202,7 +202,7 @@ class GamePage extends React.Component {
     const { results, index, respostas, timer, feedback } = this.state;
     const question = results[index];
     return (
-      <>
+      <div className="gamepage">
         <Header />
         <p>{ timer }</p>
         <div>
@@ -222,7 +222,7 @@ class GamePage extends React.Component {
           { feedback && <Redirect to="/feedback" /> }
         </div>
         { this.renderNext() }
-      </>
+      </div>
     );
   }
 }

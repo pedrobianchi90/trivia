@@ -49,24 +49,30 @@ class Login extends React.Component {
       <div className="App">
         <header className="App-header">
           <img src={ logo } className="App-logo" alt="logo" />
-          <form>
-            <input
-              type="text"
-              name="player"
-              data-testid="input-player-name"
-              placeholder="Digite seu nome"
-              value={ player }
-              onChange={ this.handleChange }
-            />
-            <input
-              type="email"
-              name="email"
-              data-testid="input-gravatar-email"
-              placeholder="Digite seu email"
-              value={ email }
-              onChange={ this.handleChange }
-            />
+          <div className="input-login">
+            <form id="login-form">
+              <input
+                type="text"
+                name="player"
+                data-testid="input-player-name"
+                placeholder="Digite seu nome"
+                value={ player }
+                onChange={ this.handleChange }
+                id="input-player"
+              />
+              <input
+                type="email"
+                name="email"
+                data-testid="input-gravatar-email"
+                placeholder="Digite seu email"
+                value={ email }
+                onChange={ this.handleChange }
+                id="input-email"
+              />
+            </form>
             <button
+              className={ !disabled && 'background-button' }
+              id="play-button"
               type="button"
               disabled={ disabled }
               data-testid="btn-play"
@@ -77,11 +83,18 @@ class Login extends React.Component {
             >
               Play
             </button>
-          </form>
-          <Link to="/settings">
-            <button type="button" data-testid="btn-settings">Configurações</button>
-          </Link>
-          { ready && <Redirect to="/gamepage" /> }
+            <Link to="/settings">
+              <button
+                id="config-button"
+                type="button"
+                data-testid="btn-settings"
+                className="background-button"
+              >
+                Configurações
+              </button>
+            </Link>
+            { ready && <Redirect to="/gamepage" /> }
+          </div>
         </header>
       </div>
     );
