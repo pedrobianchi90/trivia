@@ -2,10 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import propTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
 import Header from '../components/Header';
 import timeToAnswer from '../helpers/timers';
 import addPoints from '../helpers/addPoints';
 import { changeScore } from '../redux/actions';
+import '../GamePage.css';
 
 class GamePage extends React.Component {
   constructor() {
@@ -178,7 +181,12 @@ class GamePage extends React.Component {
     const { showClass } = this.state;
     if (showClass) {
       return (
-        <button type="button" data-testid="btn-next" onClick={ this.changeIndex }>
+        <button
+          id="next"
+          type="button"
+          data-testid="btn-next"
+          onClick={ this.changeIndex }
+        >
           Next
         </button>
       );
@@ -204,24 +212,30 @@ class GamePage extends React.Component {
     return (
       <div className="gamepage">
         <Header />
-        <p>{ timer }</p>
-        <div>
-          { results && respostas ? (
-            <div>
-              <h3 data-testid="question-category">{ question.category }</h3>
-              <p data-testid="question-text">{ question.question }</p>
-              <div data-testid="answer-options">
-                { results[index].type === 'boolean' ? (
-                  this.renderBoolean()
-                ) : (
-                  this.renderMultiples()
-                )}
+        <div id="container">
+          <h2 id="timer">
+            <FontAwesomeIcon icon={ faClock } />
+            {' '}
+            { timer }
+          </h2>
+          <div>
+            { results && respostas ? (
+              <div id="question-container">
+                <h1 data-testid="question-category">{ question.category }</h1>
+                <p data-testid="question-text" id="question">{ question.question }</p>
+                <div data-testid="answer-options" id="answers">
+                  { results[index].type === 'boolean' ? (
+                    this.renderBoolean()
+                  ) : (
+                    this.renderMultiples()
+                  )}
+                </div>
               </div>
-            </div>
-          ) : undefined }
-          { feedback && <Redirect to="/feedback" /> }
+            ) : undefined }
+            { feedback && <Redirect to="/feedback" /> }
+          </div>
+          { this.renderNext() }
         </div>
-        { this.renderNext() }
       </div>
     );
   }
