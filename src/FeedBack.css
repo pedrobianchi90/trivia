@@ -7,14 +7,16 @@ button {
   font-size: 16px;
   margin: 5px;
   padding: 10px;
-  width: 50%;
+  width: 30%;
 }
 
 #feedback-container {
   background-color: rgb(218, 228, 228);
   border-radius: 20px;
+  color: #4c505e;
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 25px;
+  padding: 30px;
 }
