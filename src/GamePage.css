@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap' ) ;
+
+* {
+  font-family: 'Righteous', cursive;
+}
+
 body {
   background: rgb(246, 239, 247);
 }
@@ -58,18 +64,28 @@ header h2:nth-child( 3 ) {
 #timer {
   align-self: center;
   margin-right: 27px;
+  color: #00C4CC;
 }
 
 #question {
   align-self: center;
   font-size: 25px;
   width: 60%;
+  color: #4c505e;
+  border: solid 1px black;
+  background-color: #fdf5c4;
+  border-radius: 20px;
+  padding: 8px;
 }
 
 #question-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#cat{
+  color: #3c4152;
 }
 
 #answers {
