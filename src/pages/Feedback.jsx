@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import '../FeedBack.css';
 
 class Feedback extends React.Component {
   componentDidMount() {
@@ -41,26 +42,38 @@ class Feedback extends React.Component {
     return (
       <>
         <Header />
-        <h1>Feedback</h1>
-        <h2 data-testid="feedback-text">{ this.handleResults() }</h2>
-        <p data-testid="feedback-total-question">
-          { assertions }
-        </p>
-        { score > 0 ? (
-          <p data-testid="feedback-total-score">
-            { score }
-          </p>
-        ) : (
-          <p data-testid="feedback-total-score">
-            0
-          </p>) }
+        <div id="feedback-container">
+          <h1>Feedback</h1>
+          <h2 data-testid="feedback-text">{ this.handleResults() }</h2>
+          <h3 data-testid="feedback-total-question">
+            You have got
+            { ' ' }
+            <span>{ assertions }</span>
+            { ' ' }
+            questions right.
+          </h3>
+          { score > 0 ? (
+            <h3 data-testid="feedback-total-score">
+              Your score is:
+              { ' ' }
+              <span>{ score }</span>
+              { ' ' }
+              points.
+            </h3>
+          ) : (
+            <p data-testid="feedback-total-score">
+              0
+            </p>) }
+          <div>
+            <Link to="/">
+              <button type="button" data-testid="btn-play-again">Play Again</button>
+            </Link>
+            <Link to="/ranking">
+              <button type="button" data-testid="btn-ranking">Ranking</button>
+            </Link>
+          </div>
 
-        <Link to="/">
-          <button type="button" data-testid="btn-play-again">Play Again</button>
-        </Link>
-        <Link to="/ranking">
-          <button type="button" data-testid="btn-ranking">Ranking</button>
-        </Link>
+        </div>
       </>
     );
   }

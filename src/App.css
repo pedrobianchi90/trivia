@@ -83,6 +83,10 @@
   cursor: pointer;
 }
 
+#config-button {
+  width: 85%;
+}
+
 @keyframes shake {
 
   10%, 90% {

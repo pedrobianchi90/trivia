@@ -1,0 +1,20 @@
+body {
+  text-align: center;
+}
+
+button {
+  border-radius: 20px;
+  font-size: 16px;
+  margin: 5px;
+  padding: 10px;
+  width: 50%;
+}
+
+#feedback-container {
+  background-color: rgb(218, 228, 228);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 25px;
+}
